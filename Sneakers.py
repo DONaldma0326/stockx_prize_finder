@@ -1,24 +1,27 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 class Sneakers:
     code = 0
     headers = {
         "user-agent":
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36"}
+
     def __init__(self, name):
         Sneakers.code += 1
-        self.code = Sneakers.code
+        self.code = str(Sneakers.code)
         self.name = str(name).lower()
 
         self.google_url = self.create_scraping_Url_news()
         self.info_url = self.create_scraping_Url_stockx()
         self.info_soup = self.create_soup(self.info_url)
-
-        self.bid = self.get_bid(self.info_soup)
-        self.ask = self.get_ask(self.info_soup)
-        self.last_sale = self.get_last_sale(self.info_soup)
-
+        try:
+            self.bid = int("".join(filter(str.isdigit, self.get_bid(self.info_soup))))
+            self.ask = int("".join(filter(str.isdigit, self.get_ask(self.info_soup))))
+            self.last_sale = self.get_last_sale(self.info_soup)
+        except:
+            return None
     def create_soup(self, url):
         page = requests.get(url, headers=Sneakers.headers)
         soup = BeautifulSoup(page.content, "html.parser")
@@ -59,7 +62,7 @@ class Sneakers:
 
         return url
 
-    def get_ask(self,soup):
+    def get_ask(self, soup):
         try:
             prizes = soup.find_all("div", class_="stats")
             return prizes[0].get_text()
@@ -67,7 +70,7 @@ class Sneakers:
         except:
             return None
 
-    def get_bid(self,soup):
+    def get_bid(self, soup):
         try:
             prizes = soup.find_all("div", class_="stats")
             return prizes[1].get_text()
@@ -75,10 +78,10 @@ class Sneakers:
         except:
             return None
 
-    def get_last_sale(self,soup):
+    def get_last_sale(self, soup):
         try:
             last_sale = soup.find("div", class_="last-sale")
             return last_sale.get_text()
         except:
             return None
-#clean data find the number of bid and ask and make them integer
+# clean data find the number of bid and ask and make them integer
