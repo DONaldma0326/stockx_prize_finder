@@ -1,11 +1,21 @@
 import sqlite3
-conn = sqlite3.connect("stockx_tracker.db")
-cursor = conn.cursor()
+from flask import Flask
+app = Flask(__name__)
 
-cursor.execute("SELECT * FROM SNEAKERS")
-print(cursor.fetchall())
-conn.commit()
-conn.close()
+@app.route('/')
+def home():
+    return"Hello!"
+
+
+
+
+# conn = sqlite3.connect("stockx_tracker.db")
+# cursor = conn.cursor()
+
+# cursor.execute("SELECT * FROM SNEAKERS")
+# print(cursor.fetchall())
+# conn.commit()
+# conn.close()
 
 
 # search = requests.get(create_scraping_Url_news(names[0]), headers=headers)
