@@ -1,0 +1,29 @@
+.sneakers-select{
+    position: relative;
+    float: right;
+    width: 20%;
+    margin:0;
+    box-sizing: border-box;
+}
+li{
+    font-size :22px;
+    list-style-type : none;
+}
+.main-container{
+    float: left;
+    border: 5px solid;
+    margin: 0px;
+    width: 80%;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+
+}
+.graph-container{
+    border: 2px solid;
+    position: relative;
+    box-sizing: border-box;
+    margin-top: auto;
+    height: 50%;
+    
+}
